@@ -13,7 +13,7 @@ class PDFWatermark {
 	private $_file;
 	private $_height;
 	private $_width;
-	private $_position;
+	private $_position; //code_smell
 	private $_asBackground;
 	
 	/**
@@ -41,17 +41,19 @@ class PDFWatermark {
 		
 		$imagetype = exif_imagetype( $file );
 		
+		//Switch statement code smell (https://refactoring.guru/es/smells/switch-statements)
+		//The code tries to avoid polymorphism using the switch structure
 		switch( $imagetype ) {
-			
 			case IMAGETYPE_JPEG:
-				$path =  sys_get_temp_dir() . '/' . uniqid() . '.jpg'; 
+				//The $path var content should be a constant declared in the beginning of a class
+				$path =  sys_get_temp_dir() . '/' . uniqid() . '.jpg';
 				$image = imagecreatefromjpeg($file);
 				imageinterlace($image,false);
 				imagejpeg($image, $path);
 				imagedestroy($image);
 				break;
-				
 			case IMAGETYPE_PNG:
+				//The $path var content should be a constant declared in the beginning of a class
 				$path =  sys_get_temp_dir() . '/' . uniqid() . '.png';
 				$image = imagecreatefrompng($file);
 				imageinterlace($image,false);
@@ -68,6 +70,7 @@ class PDFWatermark {
 		
 	}
 	
+	//The getters and setters must be revised to check which funcionality must truly be in this class
 	/**
 	 * Assess the watermark's dimensions
 	 *

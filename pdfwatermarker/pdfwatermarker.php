@@ -46,9 +46,12 @@ class PDFWatermarker {
 	private function _validateAssets() {
 		
 		if ( !file_exists( $this->_originalPdf ) ) {
-			throw new Exception("Inputted PDF file doesn't exist");
+			throw new Exception("Inputted PDF file doesn't exist"); 
 		}
 		else if ( !file_exists( $this->_watermark->getFilePath() ) ) {
+			//According to the "Tell Don't Ask principle", method calls like
+			//this one should return directly if the watermark file exists instead
+			//of the path of the file associated to the watermark
 			throw new Exception("Watermark doesn't exist.");
 		}
 		
@@ -123,9 +126,14 @@ class PDFWatermarker {
 		$templateId = $this->_tempPdf->importPage($page_number);
 		$templateDimension = $this->_tempPdf->getTemplateSize($templateId);
 		
+		//According to the "Tell Don't Ask principle", method calls like
+		//this one should return directly the sides' length in mm
 		$wWidth = ($this->_watermark->getWidth() / 96) * 25.4; //in mm
 		$wHeight = ($this->_watermark->getHeight() / 96) * 25.4; //in mm
 		
+		//Long parameter list code smell (https://refactoring.guru/es/smells/long-parameter-list)
+		//To reduce the parameter list, only $templateDimension should be passed to the method
+		//_calculateWatermarkCoordinates
 		$watermarkCoords = $this->_calculateWatermarkCoordinates( 	$wWidth, 
 																	$wHeight, 
 																	$templateDimension['w'], 
@@ -158,7 +166,8 @@ class PDFWatermarker {
 	 * @return array - coordinates of the watermark's position
 	 */
 	private function _calculateWatermarkCoordinates( $wWidth, $wHeight, $tWidth, $tHeight ) {
-		
+		//One possible improvement would be adding a system for using relative coordinates
+		//with percentages for x and y instead of fixed positions
 		switch( $this->_watermark->getPosition() ) {
 			case 'topleft': 
 				$x = 0;
