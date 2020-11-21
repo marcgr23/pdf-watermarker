@@ -8,13 +8,12 @@
  * @license https://opensource.org/licenses/MIT MIT
  */
 
-class Watermark {
+class Watermark { //DEBATIBLE
 	private $file;
 	private $_height;
 	private $_width;
-
 	private $_position;
-	// private $_asBackground;
+	private $_asBackground;
 	
 	function __construct($file, $image_prepare) {
 		$this->file = $this->prepareImage($file);
@@ -46,10 +45,8 @@ class Watermark {
 		return ($this->getWidth()/96)*25.4;
 	}
 
-	public function setPosition($position, $coordinate_x, $coordinate_y) {
+	public function setPosition($position) {
 		$this->_position = $position;
-		$this->coordinate_x = $coordinate_x;
-		$this->coordinate_y = $coordinate_y;
 	}
 	
 	public function setAsBackground() {
@@ -64,38 +61,6 @@ class Watermark {
 		return $this->_asBackground;
 	}
 	
-	public function getCoordinates($templateDimension) {
-		$wWidth = $this->getWidth(); //in mm
-		$wHeight = $this->getHeight(); //in mm
-
-		switch($this->_watermark->getPosition()) {
-			case 'topleft': 
-				$x = 0;
-				$y = 0;
-				break;
-			case 'topright':
-				$x = $templateDimension['w'] - $wWidth;
-				$y = 0;
-				break;
-			case 'bottomright':
-				$x = $templateDimension['w'] - $wWidth;
-				$y = $templateDimension['h'] - $wHeight;
-				break;
-			case 'bottomleft':
-				$x = 0;
-				$y = $templateDimension['h'] - $wHeight;
-				break;
-			case 'custom':
-				$x = ( $templateDimension['w'] - $wWidth ) * $this->getCoordinateX();
-				$y = ( $templateDimension['h'] - $wHeight ) * $this->getCoordinateY();
-				break;
-			case 'custom':
-				$x = ( $templateDimension['w'] - $wWidth ) / 2 ;
-				$y = ( $templateDimension['h'] - $wHeight ) / 2 ;
-				break; 
-		}
-	}
-	
 	public function getFilePath() {
 		return $this->file;
 	}
@@ -106,13 +71,5 @@ class Watermark {
 	
 	public function getWidth() {
 		return $this->_width;
-	}
-
-	public function getCoordinateX() {
-		return $this->coordinate_x;
-	}
-
-	public function getCoordinateY() {
-		return $this->coordinate_y;
 	}
 }

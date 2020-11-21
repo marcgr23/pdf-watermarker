@@ -36,12 +36,33 @@ $watermark->setPosition('bottomleft');
 //Place watermark behind original PDF content. Default behavior places it over the content.
 $watermark->setAsBackground();
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// enum FactoryEnum {
+//     PDF,
+//     WORD,
+// }
+
+
+$factory = new DocumentFactoryPdf();
+$document = $factory->createDocument("origin", "destiny", $watermark);
+
+$documentController = new DocumentController($document);
+
+$documentController->setPageRange(1,5);
+
+$documentController->applyWatermarksToDocument();
+
+$documentController->saveDocument();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Specify the path to the existing pdf, the path to the new pdf file, and the watermark object
-$watermarker = new PDFWatermarker('C:\test.pdf','C:\output.pdf',$watermark); 
+//$watermarker = new PDFWatermarker('C:\test.pdf','C:\output.pdf',$watermark); 
 
 //Set page range. Use 1-based index.
 $watermarker->setPageRange(1,5);
  
+//$watermarker->logicaDeAñadirMarcasDeAgua();
+
 //Save the new PDF to its specified location
 $watermarker->savePdf(); 
 ?>

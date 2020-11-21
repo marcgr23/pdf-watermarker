@@ -1,34 +1,42 @@
 <?php
 
 include './CoordinatesCalculatorService.php';
+include '../../Domain/ObjectModel/WatermarkCoordinates.php';
+include '../../Domain/Watermark.php';
 
-class AddWatermarkService {
+class AddWatermarkPDFService {
+	
+	private const WATERMARK_RESOLUTION = -96;
+    private PDFI $pdfInstance;
+	private CoordinatesCalculatorService $coordinatesService;
+	private Watermark $watermark;
 
-    private $pdfInstance;
-    private $coordinatesService;
-
-    public function __construct ($pdfInstance) {
+    public function __construct (PDFI $pdfInstance, Watermark $watermark) {
         $this->pdfInstance = $pdfInstance;
-		// $this->coordinatesService = new CoordinatesCalculatorService($this->pdfInstance);
+		$this->coordinatesService = new CoordinatesCalculatorService($this->pdfInstance); //DEBATIBLE
+		$this->watermark = $watermark;
     }
 
-    public function addWatermark ($watermark,  int $pageNumber,  bool $watermark_visible = true) {
+    public function execute (int $pageNumber) {
 		$templateId = $this->pdfInstance->importPage($pageNumber);
-		$templateDimension = $this->pdfInstance->getTempdlateSize($templateId);
-		$watermarkCoords = $watermark->getCoordinates($templateDimension);
-				
-		if ( $watermark_visible ) {
-			if ( $this->_watermark->usedAsBackground() ) {															
-				$this->pdfInstance->Image($this->_watermark->getFilePath(),$watermarkCoords[0],$watermarkCoords[1],-96);
-				$this->pdfInstance->useTemplate($templateId);
-			}
-			else {
-				$this->pdfInstance->useTemplate($templateId);
-				$this->pdfInstance->Image($this->_watermark->getFilePath(),$watermarkCoords[0],$watermarkCoords[1],-96);
-			}
+		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
+		$watermarkCoords = $this->coordinatesService->execute($this->watermark, $templateDimension);
+
+		if ( $this->watermark->usedAsBackground() ) {															
+			$this->addWatermarkAsBackGround($templateId, $watermarkCoords);
 		}
 		else {
-			$this->pdfInstance->useTemplate($templateId);
+			$this->addWatermarkAsForeground($templateId, $watermarkCoords);
 		}
-    }
+	}
+	
+	private function addWatermarkAsBackground(int $templateId, WatermarkCoordinates $watermarkCoordinates) {
+		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
+		$this->pdfInstance->useTemplate($templateId);
+	}
+
+	private function addWatermarkAsForeground(int $templateId, WatermarkCoordinates $watermarkCoordinates) {
+		$this->pdfInstance->useTemplate($templateId);
+		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
+	}
 }

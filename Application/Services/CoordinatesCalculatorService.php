@@ -1,42 +1,50 @@
 <?php
 
-class CoordinatesCalculatorService {
-    private $pdfInstance;
+include '../../Domain/ObjectModel/WatermarkCoordinates.php';
 
-    public function __construct ($pdfInstance) {
+class CoordinatesCalculatorService {
+    private FPDI $pdfInstance;
+
+    public function __construct (FPDI $pdfInstance) {
 		$this->pdfInstance = $pdfInstance;
     }
 
-    public function calculate($watermark, $templateId): array {
+    public function execute($watermark, $templateId) : WatermarkCoordinates {
 		$templateDimension = $this->pdfInstance->getTempdlateSize($templateId);
-		// $wWidth = $watermark->getWidth(); //in mm
-		// $wHeight = $watermark->getHeight(); //in mm
-		
-		// //One possible improvement would be adding a system for using relative coordinates
-		// //with percentages for x and y instead of fixed positions
-		// switch( $this->_watermark->getPosition() ) {
-		// 	case 'topleft': 
-		// 		$x = 0;
-		// 		$y = 0;
-		// 		break;
-		// 	case 'topright':
-		// 		$x = $templateDimension['w'] - $wWidth;
-		// 		$y = 0;
-		// 		break;
-		// 	case 'bottomright':
-		// 		$x = $templateDimension['w'] - $wWidth;
-		// 		$y = $templateDimension['h'] - $wHeight;
-		// 		break;
-		// 	case 'bottomleft':
-		// 		$x = 0;
-		// 		$y = $templateDimension['h'] - $wHeight;
-		// 		break;
-		// 	default:
-		// 		$x = ( $templateDimension['w'] - $wWidth ) / 2 ;
-		// 		$y = ( $templateDimension['h'] - $wHeight ) / 2 ;
-		// 		break; 
-		// }
-		
-		return array($x,$y);
+		$wWidth = $watermark->getWidth();
+		$wHeight = $watermark->getHeight();
+
+		switch( $this->watermark->getPosition() ) {
+			case 'topleft': 
+				return $this->setTopLeft();
+			case 'topright':
+				return $this->setTopRight($templateDimension['w'], $wWidth);
+			case 'bottomright':
+				return $this->setBottomRight($templateDimension, $wWidth, $wHeight);
+			case 'bottomleft':
+				return $this->setBottomLeft($templateDimension['h'], $wHeight);
+			default:
+				return $this->setCenter($templateDimension, $wWidth, $wHeight); 
+		}
+	}
+
+	private function setTopLeft() : WatermarkCoordinates {
+		return new WatermarkCoordinates(0,0);
+	}
+
+	private function setTopRight($templateDimensionW, $wWidth) : WatermarkCoordinates {
+		return new WatermarkCoordinates($templateDimensionW - $wWidth,0);
+	}
+
+	private function setBottomRight($templateDimension, $wWidth, $wHeight) : WatermarkCoordinates {
+		return new WatermarkCoordinates($templateDimension['w'] - $wWidth, $templateDimension['h'] - $wHeight);
+	}
+
+	private function setBottomLeft($templateDimensionH, $wHeight) : WatermarkCoordinates {
+		return new WatermarkCoordinates(0, $templateDimensionH - $wHeight);
+	}
+
+	private function setCenter($templateDimension, $wWidth, $wHeight) : WatermarkCoordinates {
+		return new WatermarkCoordinates(( $templateDimension['w'] - $wWidth ) / 2, ( $templateDimension['h'] - $wHeight ) / 2);
 	}
 }
