@@ -23,7 +23,7 @@ class Watermark { //DEBATIBLE
 		// $this->_asBackground = false;
 	}
 	
-	private function prepareImage($file) {
+	private function prepareImage($file) : string {
 		$imagetype = exif_imagetype( $file );
 
 		$this->image_prepare.doPrepare();
@@ -31,45 +31,45 @@ class Watermark { //DEBATIBLE
 		return $path;
 	}
 
-	private function getImageSize($image) {
+	private function getImageSize($image) : void {
 		$imageSize = getimagesize($image);
 		$this->_width = $imageSize[0];
 		$this->_height = $imageSize[1];
 	}
 
-	public function getCalculatedHeight() {
+	public function getCalculatedHeight() : float {
 		return ($this->getHeight()/96)*25.4;
 	}
 	
-	public function getCalculatedWidth() {
+	public function getCalculatedWidth() : float {
 		return ($this->getWidth()/96)*25.4;
 	}
 
-	public function setPosition($position) {
+	public function setPosition($position) : void {
 		$this->_position = $position;
 	}
 	
-	public function setAsBackground() {
+	public function setAsBackground() : void {
 		$this->_asBackground = true;
 	}
 	
-	public function setAsOverlay() {
+	public function setAsOverlay() : void {
 		$this->_asBackground = false;
 	}
 	
-	public function usedAsBackground() {
+	public function usedAsBackground() : bool {
 		return $this->_asBackground;
 	}
 	
-	public function getFilePath() {
+	public function getFilePath() : string {
 		return $this->file;
 	}
 	
-	public function getHeight() {
+	public function getHeight() : float {
 		return $this->height;
 	}
 	
-	public function getWidth() {
+	public function getWidth() : float {
 		return $this->_width;
 	}
 }

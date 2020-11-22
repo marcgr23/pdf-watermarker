@@ -31,7 +31,7 @@ class PdfDocument implements DocumentHandlerInterface, DocumentFactory {
         $this->specificPages = array();
     }
 
-    public function importPage(int $page_number) {
+    public function importPage(int $page_number) : void {
 		
 		$templateId = $this->pdfInstance->importPage($page_number);
 		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
@@ -50,11 +50,11 @@ class PdfDocument implements DocumentHandlerInterface, DocumentFactory {
         );
 	}
 
-    public function getTotalPages() {
+    public function getTotalPages() : int {
 		return $this->pdfInstace->setSourceFile($this->pathHandler->getOriginPath());
     }
 
-    public function applyWatermarksToDocument() {
+    public function applyWatermarksToDocument() : void {
         $totalPages = $this->pdfInstace->getTotalPages();
 		
 		for($ctr = 1; $ctr <= $totalPages; $ctr++) {
@@ -70,7 +70,7 @@ class PdfDocument implements DocumentHandlerInterface, DocumentFactory {
 		}
     }
 
-    public function setPageRangesToDocument(int $startPage=1, int $endPage=null) {
+    public function setPageRangesToDocument(int $startPage=1, int $endPage=null) : void {
         $end = $endPage !== null ? $endPage : $this->pdfInstace->getTotalPages();
 		
 		$this->specificPages = array();
@@ -82,7 +82,7 @@ class PdfDocument implements DocumentHandlerInterface, DocumentFactory {
 		}
     }
 
-    public function saveChangesToDocument() {
+    public function saveChangesToDocument() : void {
         
         $this->pdfInstace->Output(self::OUTPUT_FILE_VALUE, $this->pathHandler->getDestinyPath());
     }

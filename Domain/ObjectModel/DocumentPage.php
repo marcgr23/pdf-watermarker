@@ -10,7 +10,7 @@ class DocumentPage {
         $this->pageNumber = $pageNumber;
     }
 
-    public function isWatermarkVisible() {
+    public function isWatermarkVisible() : bool {
         return $this->isWatermarkVisible;
     }
 }

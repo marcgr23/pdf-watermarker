@@ -10,7 +10,7 @@ class JpgImage implements ImagePrepareInterface {
         $this->file = $file;
     }
 
-    public function doPrepare() {
+    public function doPrepare() : string {
         $path =   $this->dir. self::EXT;
         $image = imagecreatefromjpeg($this->file);
         imageinterlace($image,false);

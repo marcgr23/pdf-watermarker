@@ -1,5 +1,5 @@
 <?php
 
 interface ImagePrepareInterface {
-    public function doPrepare();
+    public function doPrepare() : string;
 }

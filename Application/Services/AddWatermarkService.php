@@ -17,7 +17,7 @@ class AddWatermarkPDFService {
 		$this->watermark = $watermark;
     }
 
-    public function execute (int $pageNumber) {
+    public function execute (int $pageNumber) : void {
 		$templateId = $this->pdfInstance->importPage($pageNumber);
 		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
 		$watermarkCoords = $this->coordinatesService->execute($this->watermark, $templateDimension);
@@ -30,12 +30,12 @@ class AddWatermarkPDFService {
 		}
 	}
 	
-	private function addWatermarkAsBackground(int $templateId, WatermarkCoordinates $watermarkCoordinates) {
+	private function addWatermarkAsBackground(int $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
 		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
 		$this->pdfInstance->useTemplate($templateId);
 	}
 
-	private function addWatermarkAsForeground(int $templateId, WatermarkCoordinates $watermarkCoordinates) {
+	private function addWatermarkAsForeground(int $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
 		$this->pdfInstance->useTemplate($templateId);
 		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
 	}

@@ -10,7 +10,7 @@ class AddWatermarkInvisibleService {
         $this->pdfInstance = $pdfInstance;
     }
 
-    public function execute (int $pageNumber) {
+    public function execute (int $pageNumber) : void {
 		$templateId = $this->pdfInstance->importPage($pageNumber);
 		$this->pdfInstance->useTemplate($templateId);
 	}
