@@ -1,28 +1,31 @@
 <?php
 
-include '../../Domain/ObjectModel/WatermarkCoordinates.php';
+use \setasign\Fpdi\Fpdi;
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/WatermarkCoordinates.php');
 
 class CoordinatesCalculatorService {
-    private FPDI $pdfInstance;
+	private FPDI $pdfInstance;
+	private const WIDTH_COLUMN_NAME   = 'width';
+    private const HEIGHT_COLUMN_NAME  = 'height';
 
     public function __construct (FPDI $pdfInstance) {
 		$this->pdfInstance = $pdfInstance;
     }
 
     public function execute($watermark, $templateId) : WatermarkCoordinates {
-		$templateDimension = $this->pdfInstance->getTempdlateSize($templateId);
-		$wWidth = $watermark->getWidth();
-		$wHeight = $watermark->getHeight();
+		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
+		$wWidth = $watermark->getCalculatedWidth();
+		$wHeight = $watermark->getCalculatedHeight();
 
-		switch( $this->watermark->getPosition() ) {
+		switch( $watermark->getPosition() ) {
 			case 'topleft': 
 				return $this->setTopLeft();
 			case 'topright':
-				return $this->setTopRight($templateDimension['w'], $wWidth);
+				return $this->setTopRight($templateDimension[self::WIDTH_COLUMN_NAME], $wWidth);
 			case 'bottomright':
 				return $this->setBottomRight($templateDimension, $wWidth, $wHeight);
 			case 'bottomleft':
-				return $this->setBottomLeft($templateDimension['h'], $wHeight);
+				return $this->setBottomLeft($templateDimension[self::HEIGHT_COLUMN_NAME], $wHeight);
 			default:
 				return $this->setCenter($templateDimension, $wWidth, $wHeight); 
 		}
@@ -37,7 +40,7 @@ class CoordinatesCalculatorService {
 	}
 
 	private function setBottomRight($templateDimension, $wWidth, $wHeight) : WatermarkCoordinates {
-		return new WatermarkCoordinates($templateDimension['w'] - $wWidth, $templateDimension['h'] - $wHeight);
+		return new WatermarkCoordinates($templateDimension[self::WIDTH_COLUMN_NAME] - $wWidth, $templateDimension[self::HEIGHT_COLUMN_NAME] - $wHeight);
 	}
 
 	private function setBottomLeft($templateDimensionH, $wHeight) : WatermarkCoordinates {
@@ -45,6 +48,6 @@ class CoordinatesCalculatorService {
 	}
 
 	private function setCenter($templateDimension, $wWidth, $wHeight) : WatermarkCoordinates {
-		return new WatermarkCoordinates(( $templateDimension['w'] - $wWidth ) / 2, ( $templateDimension['h'] - $wHeight ) / 2);
+		return new WatermarkCoordinates(( $templateDimension[self::WIDTH_COLUMN_NAME] - $wWidth ) / 2, ( $templateDimension[self::HEIGHT_COLUMN_NAME] - $wHeight ) / 2);
 	}
 }

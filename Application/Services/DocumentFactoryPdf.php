@@ -1,13 +1,17 @@
 <?php
 
-use setasign\Fpdi\Tcpdf\Fpdi;
+use \setasign\Fpdi\Fpdi;
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/DocumentPathHandler.php');
+include_once( dirname(__FILE__) . '/../Interfaces/ImagePrepareInterface.php');
+include_once( dirname(__FILE__) . '/PdfAddWatermarkService.php');
+include_once( dirname(__FILE__) . '/PdfAddWatermarkInvisibleService.php');
 
 class DocumentFactoryPdf implements DocumentFactory {
 
     public function createDocument(string $originPath, string $destinyPath, Watermark $watermark) : DocumentHandlerInterface {
-        $pdfInstance = new FPDI();
+        $pdfInstance = new Fpdi();
 
-        return $documentInstance = new PdfDocument(
+        return new PdfDocument(
             new DocumentPathHandler($originPath, $destinyPath),
             $pdfInstance,
             new PdfAddWatermarkService($pdfInstance, $watermark),

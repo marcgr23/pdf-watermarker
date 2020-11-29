@@ -1,14 +1,18 @@
 <?php
 
+include_once( dirname(__FILE__) . '/../Interfaces/DocumentHandlerInterface.php');
+include_once( dirname(__FILE__) . '/DocumentPage.php');
+use \setasign\Fpdi\Fpdi;
+
 class PdfDocument implements DocumentHandlerInterface {
 
     private const OUTPUT_FILE_VALUE   = "F";
-    private const WIDTH_COLUMN_NAME   = 'w';
-    private const HEIGHT_COLUMN_NAME  = 'h';
+    private const WIDTH_COLUMN_NAME   = 'width';
+    private const HEIGHT_COLUMN_NAME  = 'height';
     private const ORIENTATION_LANDSCAPE  = "L";
     private const ORIENTATION_PORTRAIT  = "P";
     
-    private FPDI $pdfInstace;
+    private Fpdi $pdfInstance;
     private PdfAddWatermarkServiceInterface $addWatermarkService;
     private PdfAddWatermarkServiceInterface $addWatermarkInvisibleService;
     private DocumentPathHandler $pathHandler;
@@ -16,11 +20,11 @@ class PdfDocument implements DocumentHandlerInterface {
     private $specificPages;
 
     public function __construct(DocumentPathHandler $pathHandler, 
-                                FPDI $pdfInstance,
+                                Fpdi $pdfInstance,
                                 PdfAddWatermarkServiceInterface $addWatermarkService,
                                 PdfAddWatermarkServiceInterface $addWatermarkInvisibleService) {
 
-        $this->pdfInstace = $pdfInstance;
+        $this->pdfInstance = $pdfInstance;
         $this->addWatermarkService = $addWatermarkService;
         $this->addWatermarkInvisibleService = $addWatermarkInvisibleService; 
         $this->pathHandler = $pathHandler;
@@ -32,8 +36,8 @@ class PdfDocument implements DocumentHandlerInterface {
 		
 		$templateId = $this->pdfInstance->importPage($page_number);
 		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
-        $orientation = '';
-
+        //$orientation = '';
+        
 		if ( $templateDimension[self::WIDTH_COLUMN_NAME] > $templateDimension[self::HEIGHT_COLUMN_NAME] ) {
 			$orientation = self::ORIENTATION_LANDSCAPE;
 		}
@@ -48,17 +52,16 @@ class PdfDocument implements DocumentHandlerInterface {
 	}
 
     private function getTotalPages() : int {
-		return $this->pdfInstace->setSourceFile($this->pathHandler->getOriginPath());
+		return $this->pdfInstance->setSourceFile($this->pathHandler->getOriginPath());
     }
 
     public function applyWatermarksToDocument() : void {
         $totalPages = $this->getTotalPages();
-		
 		for($ctr = 1; $ctr <= $totalPages; $ctr++) {
 			
 			$this->importPage($ctr);
 			
-			if ( $this->specificPages[$ctr]->isWatermarkVisible() ) {
+			if ( $this->specificPages[$ctr-1]->isWatermarkVisible() ) {
 				 $this->addWatermarkService->execute($ctr);
 			}
 			else {
@@ -69,16 +72,16 @@ class PdfDocument implements DocumentHandlerInterface {
 
     public function setPageRangesToDocument(int $startPage=1, int $endPage=null) : void {
         $end = $endPage !== null ? $endPage : $this->getTotalPages();
-		
 		$this->specificPages = array();
-
-		for ($ctr = $startPage; $ctr <= $this->pdfInstace->getTotalPages(); $ctr++ ) {
-            $this->specificPages[] = new DocumentPage($ctr, $ctr <= $end);
-		}
+        
+		for ($ctr = 1; $ctr <= $this->getTotalPages(); $ctr++ ) {
+            $isWithinRange = $ctr >= $startPage && $ctr <= $end;
+            $this->specificPages[] = new DocumentPage($isWithinRange, $ctr);
+        }
     }
 
     public function saveChangesToDocument() : void {
         
-        $this->pdfInstace->Output(self::OUTPUT_FILE_VALUE, $this->pathHandler->getDestinyPath());
+        $this->pdfInstance->Output(self::OUTPUT_FILE_VALUE, $this->pathHandler->getDestinyPath());
     }
 }

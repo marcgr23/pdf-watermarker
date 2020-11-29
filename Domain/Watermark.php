@@ -8,7 +8,7 @@
  * @license https://opensource.org/licenses/MIT MIT
  */
 
- include_once '';
+include_once( dirname(__FILE__) . '/../Application/Interfaces/ImagePrepareInterface.php');
 
 class Watermark { //DEBATIBLE
 	private $file;
@@ -19,9 +19,9 @@ class Watermark { //DEBATIBLE
 	private ImagePrepareInterface $image_prepare;
 	
 	function __construct($file, ImagePrepareInterface $image_prepare) {
+		$this->image_prepare = $image_prepare;
 		$this->file = $this->prepareImage($file);
 		$this->getImageSize( $this->file );
-		$this->image_prepare = $image_prepare;
 		$this->position = 'center';
 		$this->asBackground = false;
 	}
@@ -32,8 +32,8 @@ class Watermark { //DEBATIBLE
 
 	private function getImageSize($image) : void {
 		$imageSize = getimagesize($image);
-		$this->_width = $imageSize[0];
-		$this->_height = $imageSize[1];
+		$this->width = $imageSize[0];
+		$this->height = $imageSize[1];
 	}
 
 	public function getCalculatedHeight() : float {
@@ -70,5 +70,9 @@ class Watermark { //DEBATIBLE
 	
 	public function getWidth() : float {
 		return $this->width;
+	}
+
+	public function getPosition() : string {
+		return $this->position;
 	}
 }

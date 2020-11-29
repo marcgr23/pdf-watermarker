@@ -1,11 +1,13 @@
 <?php
 
-include './CoordinatesCalculatorService.php';
+include_once( dirname(__FILE__) . '/../../Domain/Interfaces/PdfAddWatermarkServiceInterface.php');
+
+use \setasign\Fpdi\Fpdi;
 
 class PdfAddWatermarkInvisibleService implements PdfAddWatermarkServiceInterface {
-    private FPDI $pdfInstance;
+    private Fpdi $pdfInstance;
 
-    public function __construct (FPDI &$pdfInstance) {
+    public function __construct (Fpdi &$pdfInstance) {
         $this->pdfInstance = $pdfInstance;
     }
 

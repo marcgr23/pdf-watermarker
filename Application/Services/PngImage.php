@@ -1,5 +1,7 @@
 <?php
 
+include_once( dirname(__FILE__) . '/../Interfaces/ImagePrepareInterface.php');
+
 class PngImage implements ImagePrepareInterface {
     private $dir;
     private $file;
