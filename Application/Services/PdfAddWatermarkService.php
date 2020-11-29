@@ -4,14 +4,14 @@ include './CoordinatesCalculatorService.php';
 include '../../Domain/ObjectModel/WatermarkCoordinates.php';
 include '../../Domain/Watermark.php';
 
-class AddWatermarkPDFService {
+class PdfAddWatermarkService implements PdfAddWatermarkServiceInterface {
 	
 	private const WATERMARK_RESOLUTION = -96;
-    private PDFI $pdfInstance;
+    private FPDI $pdfInstance;
 	private CoordinatesCalculatorService $coordinatesService;
 	private Watermark $watermark;
 
-    public function __construct (PDFI $pdfInstance, Watermark $watermark) {
+    public function __construct (FPDI &$pdfInstance, Watermark $watermark) {
         $this->pdfInstance = $pdfInstance;
 		$this->coordinatesService = new CoordinatesCalculatorService($this->pdfInstance); //DEBATIBLE
 		$this->watermark = $watermark;
@@ -31,12 +31,12 @@ class AddWatermarkPDFService {
 	}
 	
 	private function addWatermarkAsBackground(int $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
-		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
+		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),self::WATERMARK_RESOLUTION);
 		$this->pdfInstance->useTemplate($templateId);
 	}
 
 	private function addWatermarkAsForeground(int $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
 		$this->pdfInstance->useTemplate($templateId);
-		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),$self::WATERMARK_RESOLUTION);
+		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),self::WATERMARK_RESOLUTION);
 	}
 }

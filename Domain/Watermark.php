@@ -8,27 +8,26 @@
  * @license https://opensource.org/licenses/MIT MIT
  */
 
+ include_once '';
+
 class Watermark { //DEBATIBLE
 	private $file;
-	private $_height;
-	private $_width;
-	private $_position;
-	private $_asBackground;
+	private $height;
+	private $width;
+	private $position;
+	private $asBackground;
+	private ImagePrepareInterface $image_prepare;
 	
-	function __construct($file, $image_prepare) {
+	function __construct($file, ImagePrepareInterface $image_prepare) {
 		$this->file = $this->prepareImage($file);
 		$this->getImageSize( $this->file );
-		
-		// $this->_position = 'center';
-		// $this->_asBackground = false;
+		$this->image_prepare = $image_prepare;
+		$this->position = 'center';
+		$this->asBackground = false;
 	}
 	
-	private function prepareImage($file) : string {
-		$imagetype = exif_imagetype( $file );
-
-		$this->image_prepare.doPrepare();
-			
-		return $path;
+	private function prepareImage() : string {
+		return $this->image_prepare->doPrepare();
 	}
 
 	private function getImageSize($image) : void {
@@ -46,19 +45,19 @@ class Watermark { //DEBATIBLE
 	}
 
 	public function setPosition($position) : void {
-		$this->_position = $position;
+		$this->position = $position;
 	}
 	
 	public function setAsBackground() : void {
-		$this->_asBackground = true;
+		$this->asBackground = true;
 	}
 	
 	public function setAsOverlay() : void {
-		$this->_asBackground = false;
+		$this->asBackground = false;
 	}
 	
 	public function usedAsBackground() : bool {
-		return $this->_asBackground;
+		return $this->asBackground;
 	}
 	
 	public function getFilePath() : string {
@@ -70,6 +69,6 @@ class Watermark { //DEBATIBLE
 	}
 	
 	public function getWidth() : float {
-		return $this->_width;
+		return $this->width;
 	}
 }

@@ -2,11 +2,10 @@
 
 include './CoordinatesCalculatorService.php';
 
-class AddWatermarkInvisibleService {
+class PdfAddWatermarkInvisibleService implements PdfAddWatermarkServiceInterface {
+    private FPDI $pdfInstance;
 
-    private PDFI $pdfInstance;
-
-    public function __construct (PDFI $pdfInstance) {
+    public function __construct (FPDI &$pdfInstance) {
         $this->pdfInstance = $pdfInstance;
     }
 
