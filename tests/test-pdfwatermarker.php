@@ -1,11 +1,11 @@
 <?php
 
-include_once('/home/alberto/development/pdf-watermarker/Application/Interfaces/DocumentFactory.php');
-include_once('/home/alberto/development/pdf-watermarker/Application/Services/DocumentFactoryPdf.php');
-include_once('/home/alberto/development/pdf-watermarker/Domain/ObjectModel/PdfDocument.php');
-include_once('/home/alberto/development/pdf-watermarker/Domain/Watermark.php');
-include_once('/home/alberto/development/pdf-watermarker/Application/Services/PngImage.php');
-include_once('/home/alberto/development/pdf-watermarker/Application/Services/JpgImage.php');
+include_once( dirname(__FILE__) . '/../Application/Interfaces/DocumentFactory.php');
+include_once( dirname(__FILE__) . '/../Application/Services/DocumentFactoryPdf.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/PdfDocument.php');
+include_once( dirname(__FILE__) . '/../Domain/Watermark.php');
+include_once( dirname(__FILE__) . '/../Application/Services/PngImage.php');
+include_once( dirname(__FILE__) . '/../Application/Services/JpgImage.php');
 
 class PDFWatermarker_test extends PHPUnit_Framework_TestCase
 {
