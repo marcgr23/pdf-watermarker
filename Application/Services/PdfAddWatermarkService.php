@@ -1,7 +1,7 @@
 <?php
 
 include_once( dirname(__FILE__) . '/CoordinatesCalculatorService.php');
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/WatermarkCoordinates.php');
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
 include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
 include_once( dirname(__FILE__) . '/../../Domain/Interfaces/PdfAddWatermarkServiceInterface.php');
 
@@ -32,12 +32,12 @@ class PdfAddWatermarkService implements PdfAddWatermarkServiceInterface {
 		}
 	}
 	
-	private function addWatermarkAsBackground(string $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
+	private function addWatermarkAsBackground(string $templateId, Coordinates $watermarkCoordinates) : void {
 		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),self::WATERMARK_RESOLUTION);
 		$this->pdfInstance->useTemplate($templateId);
 	}
 
-	private function addWatermarkAsForeground(string $templateId, WatermarkCoordinates $watermarkCoordinates) : void {
+	private function addWatermarkAsForeground(string $templateId, Coordinates $watermarkCoordinates) : void {
 		$this->pdfInstance->useTemplate($templateId);
 		$this->pdfInstance->Image($this->watermark->getFilePath(),$watermarkCoordinates->getX(),$watermarkCoordinates->getY(),self::WATERMARK_RESOLUTION);
 	}

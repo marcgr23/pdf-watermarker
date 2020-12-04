@@ -1,6 +1,6 @@
 <?php
 
-class JpgImage implements ImagePrepareInterface {
+class SetupJpgImageService implements ImagePrepareInterface {
     private $dir;
     private $file;
     const EXT = '.jpg';
