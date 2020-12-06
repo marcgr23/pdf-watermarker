@@ -1,19 +1,21 @@
 <?php
 
-use \setasign\Fpdi\Fpdi;
 include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
+include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
+include_once( dirname(__FILE__) . '/../../Domain/Document.php');
+include_once( dirname(__FILE__) . '/../../Domain/Interfaces/CoordinatesCalculatorInterface.php');
 
-class CoordinatesCalculatorService {
-	private FPDI $pdfInstance;
+class PdfCoordinatesCalculatorService implements CoordinatesCalculatorInterface {
+	private Document $document;
 	private const WIDTH_COLUMN_NAME   = 'width';
     private const HEIGHT_COLUMN_NAME  = 'height';
 
-    public function __construct (FPDI $pdfInstance) {
-		$this->pdfInstance = $pdfInstance;
+    public function __construct (Document $document) {
+		$this->document = $document;
     }
 
-    public function execute($watermark, $templateId) : Coordinates {
-		$templateDimension = $this->pdfInstance->getTemplateSize($templateId);
+    public function execute(Watermark $watermark, string $templateId) : Coordinates {
+		$templateDimension = $this->document->pdfInstance->getTemplateSize($templateId);
 		$wWidth = $watermark->getCalculatedWidth();
 		$wHeight = $watermark->getCalculatedHeight();
 
