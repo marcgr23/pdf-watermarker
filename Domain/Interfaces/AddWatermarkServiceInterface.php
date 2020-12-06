@@ -1,6 +1,6 @@
 <?php
 
 interface AddWatermarkServiceInterface {
-    public function execute (Document &$document, int $pageNumber) : void;
+    public function execute (Document &$document, DocumentPage $page) : void;
 }
 ?>

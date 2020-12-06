@@ -1,7 +1,7 @@
 <?php
 
-class GetTotalPagesFromPDFService {
-    public function getTotalPages(Document $document) {
+class GetTotalPagesFromPDFService implements GetTotalPagesFromDocumentInterface {
+    public function execute(Document $document) : int {
         return $document->pdfInstance->setSourceFile($document->pathHandler->getOriginPath());
     }
 }

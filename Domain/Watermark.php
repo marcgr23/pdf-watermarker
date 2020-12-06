@@ -1,50 +1,49 @@
 <?php
-/**
- * pdfwatermark.php
- * 
- * This class defines properties of a watermark
- * @author Binarystash <binarystash01@gmail.com>
- * @version 1.1.1
- * @license https://opensource.org/licenses/MIT MIT
- */
 
 include_once( dirname(__FILE__) . '/../Application/Interfaces/ImagePrepareInterface.php');
 
-class Watermark { //DEBATIBLE
-	private $file;
-	private $height;
-	private $width;
-	private $position;
-	private $asBackground;
-	private ImagePrepareInterface $image_prepare;
+class Watermark {
+
+	const IMAGE_WIDTH = 0;
+	const IMAGE_HEIGHT = 1;
+	const DPI = 96;
+	const INCHES = 25.4;
+	const DEFAULT_POSITION = 'center';
 	
-	function __construct($file, ImagePrepareInterface $image_prepare) {
-		$this->image_prepare = $image_prepare;
-		$this->file = $this->prepareImage($file);
+	private string $filePath;
+	private int $height;
+	private int $width;
+	private string $position;
+	private bool $asBackground;
+	private ImagePrepareInterface $imagePrepare;
+	
+	function __construct(string $filePath, ImagePrepareInterface $imagePrepare) {
+		$this->imagePrepare = $imagePrepare;
+		$this->filePath = $this->prepareImage($filePath);
 		$this->getImageSize( $this->file );
-		$this->position = 'center';
+		$this->position = self::DEFAULT_POSITION;
 		$this->asBackground = false;
 	}
 	
 	private function prepareImage() : string {
-		return $this->image_prepare->doPrepare();
+		return $this->imagePrepare->doPrepare();
 	}
 
-	private function getImageSize($image) : void {
-		$imageSize = getimagesize($image);
-		$this->width = $imageSize[0];
-		$this->height = $imageSize[1];
+	private function getImageSize(string $filePath) : void {
+		$imageSize = getimagesize($filePath);
+		$this->width = $imageSize[self::IMAGE_WIDTH];
+		$this->height = $imageSize[self::IMAGE_HEIGHT];
 	}
 
 	public function getCalculatedHeight() : float {
-		return ($this->getHeight()/96)*25.4;
+		return ($this->getHeight()/self::DPI)*self::INCHES;
 	}
 	
 	public function getCalculatedWidth() : float {
-		return ($this->getWidth()/96)*25.4;
+		return ($this->getWidth()/self::DPI)*self::INCHES;
 	}
 
-	public function setPosition($position) : void {
+	public function setPosition(string $position) : void {
 		$this->position = $position;
 	}
 	
@@ -61,7 +60,7 @@ class Watermark { //DEBATIBLE
 	}
 	
 	public function getFilePath() : string {
-		return $this->file;
+		return $this->filePath;
 	}
 	
 	public function getHeight() : float {

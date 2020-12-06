@@ -5,17 +5,12 @@ include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
 include_once( dirname(__FILE__) . '/../../Domain/Document.php');
 include_once( dirname(__FILE__) . '/../../Domain/Interfaces/CoordinatesCalculatorInterface.php');
 
-class PdfCoordinatesCalculatorService implements CoordinatesCalculatorInterface {
-	private Document $document;
+class CoordinatesCalculatorService implements CoordinatesCalculatorInterface {
 	private const WIDTH_COLUMN_NAME   = 'width';
     private const HEIGHT_COLUMN_NAME  = 'height';
 
-    public function __construct (Document $document) {
-		$this->document = $document;
-    }
-
-    public function execute(Watermark $watermark, string $templateId) : Coordinates {
-		$templateDimension = $this->document->pdfInstance->getTemplateSize($templateId);
+    public function execute(Watermark $watermark, string $templateId, Document $document) : Coordinates {
+		$templateDimension = $document->pdfInstance->getTemplateSize($templateId);
 		$wWidth = $watermark->getCalculatedWidth();
 		$wHeight = $watermark->getCalculatedHeight();
 

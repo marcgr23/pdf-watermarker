@@ -7,7 +7,7 @@ class ImportPageToPDFService implements ImportPageInterface {
     private const ORIENTATION_PORTRAIT  = "P";
 
     public function execute(DocumentPage $page, Document &$document) : void {
-        $templateId = $document->pdfInstance->importPage($page->getPage());
+        $templateId = $document->pdfInstance->importPage($page->getPageNumber());
 		$templateDimension = $document->pdfInstance->getTemplateSize($templateId);
         
 		if ( $templateDimension[self::WIDTH_COLUMN_NAME] > $templateDimension[self::HEIGHT_COLUMN_NAME] ) {

@@ -14,7 +14,7 @@ class DocumentPage {
         return $this->isWatermarkVisible;
     }
 
-    public function getPage() {
+    public function getPageNumber() {
         return $this->pageNumber;
     }
 }
