@@ -3,7 +3,7 @@
 include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
 include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
 include_once( dirname(__FILE__) . '/../../Domain/Document.php');
-include_once( dirname(__FILE__) . '/../../Domain/Interfaces/CoordinatesCalculatorInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/CoordinatesCalculatorInterface.php');
 
 class CoordinatesCalculatorService implements CoordinatesCalculatorInterface {
 	private const WIDTH_COLUMN_NAME   = 'width';

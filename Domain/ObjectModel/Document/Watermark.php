@@ -1,6 +1,6 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Application/Interfaces/ImagePrepareInterface.php');
+include_once( dirname(__FILE__) . '/../../Interfaces/Image/ImagePrepareInterface.php');
 
 class Watermark {
 
@@ -20,7 +20,7 @@ class Watermark {
 	function __construct(string $filePath, ImagePrepareInterface $imagePrepare) {
 		$this->imagePrepare = $imagePrepare;
 		$this->filePath = $this->prepareImage($filePath);
-		$this->getImageSize( $this->file );
+		$this->getImageSize( $this->filePath );
 		$this->position = self::DEFAULT_POSITION;
 		$this->asBackground = false;
 	}

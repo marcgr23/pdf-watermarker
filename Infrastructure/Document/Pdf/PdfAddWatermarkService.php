@@ -3,7 +3,7 @@
 include_once( dirname(__FILE__) . '/CoordinatesCalculatorService.php');
 include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
 include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../../Domain/Interfaces/PdfAddWatermarkServiceInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/PdfAddWatermarkServiceInterface.php');
 
 class PdfAddWatermarkService implements AddWatermarkServiceInterface {
 	

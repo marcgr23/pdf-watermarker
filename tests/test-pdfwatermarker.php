@@ -1,11 +1,11 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Application/Interfaces/DocumentFactory.php');
-include_once( dirname(__FILE__) . '/../Application/Services/DocumentFactoryPdf.php');
-include_once( dirname(__FILE__) . '/../Domain/ObjectModel/PdfDocument.php');
-include_once( dirname(__FILE__) . '/../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../Application/Services/PngImage.php');
-include_once( dirname(__FILE__) . '/../Application/Services/JpgImage.php');
+include_once( dirname(__FILE__) . '/../Domain/DocumentManagement/DocumentFactoryInterface.php');
+include_once( dirname(__FILE__) . '/../Infrastructure/DocumentManagement/Pdf/PdfControllerFactory.php');
+
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/DocumentManagement/Watermark.php');
+include_once( dirname(__FILE__) . '/../Infrastructure/Image/SetupPngImageService.php');
+include_once( dirname(__FILE__) . '/../Infrastructure/Image/SetupJpgImageService.php');
 
 class PDFWatermarker_test extends PHPUnit_Framework_TestCase
 {
@@ -13,7 +13,7 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
   public $watermarker;
   public $output;
   public $output_multiple;
-  public DocumentFactory $factory;
+  public DocumentFactoryInterface $factory;
   public PdfDocument $document;
   public PdfDocument $document_multiple;
   const DIRECTORY_SEPARATOR = '/';
@@ -22,16 +22,16 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
 
   function setUp() {
     $this->_assets_directory = dirname(__FILE__) . self::DIRECTORY_SEPARATOR . ".." . self::DIRECTORY_SEPARATOR . "assets" . self::DIRECTORY_SEPARATOR;
-    $this->factory = new DocumentFactoryPdf();
+    $this->factory = new PdfControllerFactory();
     $this->watermark = new Watermark( $this->_assets_directory . "star.png",
-                                      new PngImage($this->_assets_directory . "star.png"));
+                                      new SetupPngImageService($this->_assets_directory . "star.png"));
     $this->output =  $this->_assets_directory . "test-output.pdf";
     $this->output_multiple =  $this->_assets_directory . "test-output-multiple.pdf";
     $input = $this->_assets_directory . "test.pdf";
     $input_multiple = $this->_assets_directory . "test-multipage.pdf";    
-    $this->watermarker = $this->factory->createDocument($input, $this->output, $this->watermark);
-    $this->watermarker->setPageRangesToDocument(1);
-    $this->watermarker_multiple = $this->factory->createDocument($input_multiple, $this->output_multiple, $this->watermark);
+    $this->watermarker = $this->factory->create($input, $this->output, $this->watermark);
+    $this->watermarker->setPageRange(new Range());
+    $this->watermarker_multiple = $this->factory->create($input_multiple, $this->output_multiple, $this->watermark);
   }
 
   public function testDefaultOptions() {

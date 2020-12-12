@@ -1,6 +1,6 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Interfaces/ImagePrepareInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/Image/ImagePrepareInterface.php');
 
 class SetupPngImageService implements ImagePrepareInterface {
     private $dir;

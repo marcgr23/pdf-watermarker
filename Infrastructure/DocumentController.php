@@ -4,9 +4,9 @@ include_once( dirname(__FILE__) . '/../Domain/Watermark.php');
 include_once( dirname(__FILE__) . '/../Domain/Document.php');
 include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Range.php');
 
-include_once(dirname(__FILE__) . '/../Domain/Interfaces/SetPageRangeToDocumentService.php');
-include_once(dirname(__FILE__) . '/../Domain/Interfaces/ApplyWatermarkToDocumentService.php');
-include_once(dirname(__FILE__) . '/../Domain/Interfaces/SaveChangesToDocumentService.php');
+include_once(dirname(__FILE__) . '/../Domain/SetPageRangeToDocumentService.php');
+include_once(dirname(__FILE__) . '/../Domain/ApplyWatermarkToDocumentService.php');
+include_once(dirname(__FILE__) . '/../Domain/SaveChangesToDocumentService.php');
 
 class DocumentController {
 	private SetPageRangeToDocumentService $setPageRangeToDocumentService;

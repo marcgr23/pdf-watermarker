@@ -1,9 +1,9 @@
 <?php
 
 include_once( dirname(__FILE__) . '/DocumentController.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/DocumentManagement/ApplyWatermarkToDocumentService.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/DocumentManagement/SaveChangesToDocumentService.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/DocumentManagement/SetPageRangeToDocumentService.php' );
+include_once( dirname(__FILE__) . '/../Application/Services/Document/ApplyWatermarkToDocument.php' );
+include_once( dirname(__FILE__) . '/../Application/Services/Document/SaveChangesToDocument.php' );
+include_once( dirname(__FILE__) . '/../Application/Services/Document/SetPageRangeToDocument.php' );
 
 class PdfControllerFactory implements DocumentFactoryInterface {
     public function create( string $originPath,

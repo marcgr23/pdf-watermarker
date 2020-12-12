@@ -1,11 +1,11 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../../Domain/Document.php');
-include_once( dirname(__FILE__) . '/../../../Domain/Interfaces/GetTotalPagesFromDocumentInterface.php');
-include_once( dirname(__FILE__) . '/../../../Domain/Interfaces/ImportPageInterface.php');
-include_once( dirname(__FILE__) . '/../../../Domain/Interfaces/AddWatermarkServiceInterface.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/../Domain/Document/GetTotalPagesFromDocumentInterface.php');
+include_once( dirname(__FILE__) . '/../Domain/Document/ImportPageInterface.php');
+include_once( dirname(__FILE__) . '/../Domain/Document/AddWatermarkServiceInterface.php');
 
-class ApplyWatermarkToDocumentService {
+class ApplyWatermarkToDocument {
     private AddWatermarkServiceInterface $addWatermarkService;
     private AddWatermarkServiceInterface $addWatermarkInvisibleService;
     private GetTotalPagesFromDocumentInterface $getTotalPagesFromDocumentService;
@@ -21,7 +21,8 @@ class ApplyWatermarkToDocumentService {
         $this->getTotalPagesFromDocumentService = $getTotalPagesFromDocumentService;
         $this->importPageService = $importPageService;
     }
-    
+
+
     public function execute(Document &$document) : void {
         $totalPages = $this->getTotalPagesFromDocumentService->execute($document);
 		for($ctr = 1; $ctr <= $totalPages; $ctr++) {
@@ -29,10 +30,10 @@ class ApplyWatermarkToDocumentService {
 			$this->importPageService->execute($currentPage, $document);
 			
 			if ( $currentPage->isWatermarkVisible() ) {
-				 $this->addWatermarkService->execute($document, $ctr);
+				 $this->addWatermarkService->execute($document, $currentPage);
 			}
 			else {
-				$this->addWatermarkInvisibleService->execute($document, $ctr);
+				$this->addWatermarkInvisibleService->execute($document, $currentPage);
 			}
 		}
     }
