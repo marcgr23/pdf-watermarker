@@ -1,13 +1,12 @@
 <?php
 
-include_once( dirname(__FILE__) . '/ObjectModel/DocumentPathHandler.php');
-include_once( dirname(__FILE__) . '/ObjectModel/Range.php');
+include_once( dirname(__FILE__) . '/DocumentPathHandler.php');
 
 abstract class Document {
     public DocumentPathHandler $pathHandler;
     public $pages;
 
-    public function __construct(DocumentPathHandler $pathHandler, Range $range) {
+    public function __construct(DocumentPathHandler $pathHandler) {
         $this->pathHandler = $pathHandler;
         $this->pages = array();
     }

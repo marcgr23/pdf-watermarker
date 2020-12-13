@@ -1,15 +1,15 @@
 <?php
 
-class SetPageRangeToDocument {
+class SetRangeToDocumentPages {
 
-    private GetTotalPagesFromDocumentInterface $getTotalPagesFromDocumentService;
+    private GetTotalPagesFromDocumentInterface $getTotalPagesFromDocument;
 
-    public function __construct(GetTotalPagesFromDocumentInterface $getTotalPagesFromDocumentService) {
-        $this->getTotalPagesFromDocumentService = $getTotalPagesFromDocumentService;
+    public function __construct(GetTotalPagesFromDocumentInterface $getTotalPagesFromDocument) {
+        $this->getTotalPagesFromDocument = $getTotalPagesFromDocument;
     }
 
     public function execute(Range $range, Document &$document) : void {
-        $totalPages = $this->getTotalPagesFromDocumentService->execute($document);
+        $totalPages = $this->getTotalPagesFromDocument->execute($document);
     
         $end = $range->getRangeEnd() !== null ? $range->getRangeEnd() : $totalPages;
     

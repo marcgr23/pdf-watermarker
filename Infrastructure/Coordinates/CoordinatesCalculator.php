@@ -5,7 +5,7 @@ include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
 include_once( dirname(__FILE__) . '/../../Domain/Document.php');
 include_once( dirname(__FILE__) . '/../../Domain/CoordinatesCalculatorInterface.php');
 
-class CoordinatesCalculatorService implements CoordinatesCalculatorInterface {
+class CoordinatesCalculator implements CoordinatesCalculatorInterface {
 	private const WIDTH_COLUMN_NAME   = 'width';
     private const HEIGHT_COLUMN_NAME  = 'height';
 

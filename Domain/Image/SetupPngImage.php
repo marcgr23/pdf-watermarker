@@ -2,7 +2,7 @@
 
 include_once( dirname(__FILE__) . '/../../Domain/Image/ImagePrepareInterface.php');
 
-class SetupPngImageService implements ImagePrepareInterface {
+class SetupPngImage implements ImagePrepareInterface {
     private $dir;
     private $file;
     const EXT = '.png';

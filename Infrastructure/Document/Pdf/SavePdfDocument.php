@@ -2,7 +2,7 @@
 
 include_once( dirname(__FILE__) . '/../Domain/Document.php' );
 
-class SavePDFDocument implements SaveDocumentInterface {
+class SavePdfDocument implements SaveDocumentInterface {
     private const OUTPUT_FILE_VALUE   = "F";
 
     public function execute(Document $document) : void {

@@ -1,8 +1,8 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Domain/ObjectModel/DocumentManagement/Watermark.php');
-include_once( dirname(__FILE__) . '/../Infrastructure/Image/SetupPngImageService.php');
-include_once( dirname(__FILE__) . '/../Infrastructure/Image/SetupJpgImageService.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Document/Watermark.php');
+include_once( dirname(__FILE__) . '/../Domain/Image/SetupPngImage.php');
+include_once( dirname(__FILE__) . '/../Domain/Image/SetupJpgImage.php');
 
 $parent_directory = dirname(__FILE__);
 
@@ -21,10 +21,10 @@ class PDFWatermark_test extends PHPUnit_Framework_TestCase
 		$this->_assets_directory = dirname(__FILE__) . self::DIRECTORY_SEPARATOR . ".." . self::DIRECTORY_SEPARATOR . "assets" . self::DIRECTORY_SEPARATOR;
 		
 		$this->watermark = new Watermark( $this->_assets_directory . "star.png",
-			new SetupPngImageService($this->_assets_directory . "star.png"));
+			new SetupPngImage($this->_assets_directory . "star.png"));
 
 		$this->watermarkJpg = new Watermark( $this->_assets_directory . "star.png",
-			new SetupJpgImageService($this->_assets_directory . "star.jpg"));
+			new SetupJpgImage($this->_assets_directory . "star.jpg"));
 
     }
 	

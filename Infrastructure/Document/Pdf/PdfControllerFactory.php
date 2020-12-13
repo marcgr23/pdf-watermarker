@@ -1,29 +1,34 @@
 <?php
 
-include_once( dirname(__FILE__) . '/DocumentController.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/Document/ApplyWatermarkToDocument.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/Document/SaveChangesToDocument.php' );
-include_once( dirname(__FILE__) . '/../Application/Services/Document/SetPageRangeToDocument.php' );
+include_once( dirname(__FILE__) . '/../../DocumentController.php' );
+include_once( dirname(__FILE__) . '/../../../Application/Document/ApplyWatermarkToDocument.php' );
+include_once( dirname(__FILE__) . '/../../../Application/Document/SaveChangesToDocument.php' );
+include_once( dirname(__FILE__) . '/../../../Application/Document/SetPageRangeToDocument.php' );
 
-class PdfControllerFactory implements DocumentFactoryInterface {
+
+class PdfControllerFactory implements DocumentControllerFactoryInterface {
     public function create( string $originPath,
                             string $destinationPath,
                             Watermark $watermark) : DocumentController {
         return new DocumentController(
-            new ApplyWatermarkToDocumentService(
-                new PdfAddWatermarkService(
-                    $watermark,
-                    new CoordinatesCalculatorService()
-                ),
-                new PdfAddWatermarkInvisibleService(),
-                new GetTotalPagesFromPDFService(),
-                new ImportPageToPDFService()
+            new ApplyWatermarkToDocument(
+                new ApplyWatermarkToDocumentForEachPage(
+                    new PdfAddWatermark(
+                        $watermark,
+                        new CoordinatesCalculator()
+                    ),
+                    new PdfAddWatermarkInvisible(),
+                    new GetTotalPagesFromPdf(),
+                    new ImportPageToPdf()
+                )
             ),
-            new SetPageRangeToDocumentService(
-                new GetTotalPagesFromPDFService()
+            new SetPageRangeToDocument(
+                new SetRangeToDocumentPages(
+                    new GetTotalPagesFromPdf()
+                )
             ),
-            new SaveChangesToDocumentService(
-                new SavePDFDocument()
+            new SaveChangesToDocument(
+                new SavePdfDocument()
             )
         );
     }

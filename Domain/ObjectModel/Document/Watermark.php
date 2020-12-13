@@ -1,6 +1,6 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../Interfaces/Image/ImagePrepareInterface.php');
+include_once( dirname(__FILE__) . '/../../Image/ImagePrepareInterface.php');
 
 class Watermark {
 

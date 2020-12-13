@@ -1,6 +1,6 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Document.php' );
+include_once( dirname(__FILE__) . '/../Document/SaveDocumentInterface.php' );
 
 interface SaveDocumentInterface {
 

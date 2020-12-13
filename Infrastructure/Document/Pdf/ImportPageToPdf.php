@@ -1,6 +1,6 @@
 <?php
 
-class ImportPageToPDFService implements ImportPageInterface {
+class ImportPageToPdf implements ImportPageInterface {
     private const WIDTH_COLUMN_NAME   = 'width';
     private const HEIGHT_COLUMN_NAME  = 'height';
     private const ORIENTATION_LANDSCAPE  = "L";

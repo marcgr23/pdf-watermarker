@@ -1,25 +1,16 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../Domain/Document/ApplyWatermarkToDocument.php');
 include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Document.php');
-include_once( dirname(__FILE__) . '/../../Domain/Document/GetTotalPagesFromDocumentInterface.php');
-include_once( dirname(__FILE__) . '/../../Domain/Document/ImportPageInterface.php');
-include_once( dirname(__FILE__) . '/../../Domain/Document/AddWatermarkServiceInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/Document/ApplyWatermarkToDocumentForEachPage.php');
 
 class ApplyWatermarkToDocument {
-    private ApplyWatermarkToDocument $applyWatermarkToDocument;
+    private ApplyWatermarkToDocumentForEachPage $applyWatermarkToDocumentForEachPage;
 
-    public function __construct(AddWatermarkServiceInterface $addWatermarkService,
-                                AddWatermarkServiceInterface $addWatermarkInvisibleService,
-                                GetTotalPagesFromDocumentInterface $getTotalPagesFromDocumentService,
-                                ImportPageInterface $importPageService) {
-        $this->applyWatermarkToDocument = new ApplyWatermarkToDocument( $addWatermarkService,
-                                                                        $addWatermarkInvisibleService,
-                                                                        $getTotalPagesFromDocumentService,
-                                                                        $importPageService);
+    public function __construct(ApplyWatermarkToDocumentForEachPage $applyWatermarkToDocumentForEachPage) {
+        $this->applyWatermarkToDocumentForEachPage = $applyWatermarkToDocumentForEachPage;
     }
     
     public function execute(Document &$document) : void {
-        $this->applyWatermarkToDocument->execute($document);
+        $this->applyWatermarkToDocumentForEachPage->execute($document);
     }
 }

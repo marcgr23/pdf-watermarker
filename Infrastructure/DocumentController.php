@@ -1,36 +1,36 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../Domain/Document.php');
-include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Range.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Document/Watermark.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/../Domain/ObjectModel/Document/Range.php');
 
-include_once(dirname(__FILE__) . '/../Domain/SetPageRangeToDocumentService.php');
-include_once(dirname(__FILE__) . '/../Domain/ApplyWatermarkToDocumentService.php');
-include_once(dirname(__FILE__) . '/../Domain/SaveChangesToDocumentService.php');
+include_once(dirname(__FILE__) . '/../Application/Document/SetPageRangeToDocument.php');
+include_once(dirname(__FILE__) . '/../Application/Document/ApplyWatermarkToDocument.php');
+include_once(dirname(__FILE__) . '/../Application/Document/SaveChangesToDocument.php');
 
 class DocumentController {
-	private SetPageRangeToDocumentService $setPageRangeToDocumentService;
-	private ApplyWatermarkToDocumentService $applyWatermarkToDocumentService;
-	private SaveChangesToDocumentService $saveChangesToDocumentService;
+	private SetPageRangeToDocument $setPageRangeToDocument;
+	private ApplyWatermarkToDocument $applyWatermarkToDocument;
+	private SaveChangesToDocument $saveChangesToDocument;
 	
-	public function __construct(ApplyWatermarkToDocumentService $applyWatermarkToDocumentService,
-								SetPageRangeToDocumentService $setPageRangeToDocumentService,
-								SaveChangesToDocumentService $saveChangesToDocumentService) {
-		$this->applyWatermarkToDocumentService = $applyWatermarkToDocumentService;
-		$this->setPageRangeToDocumentService = $setPageRangeToDocumentService;
-		$this->saveChangesToDocumentService = $saveChangesToDocumentService;
+	public function __construct(ApplyWatermarkToDocument $applyWatermarkToDocument,
+								SetPageRangeToDocument $setPageRangeToDocument,
+								SaveChangesToDocument $saveChangesToDocument) {
+		$this->applyWatermarkToDocument = $applyWatermarkToDocument;
+		$this->setPageRangeToDocument = $setPageRangeToDocument;
+		$this->saveChangesToDocument = $saveChangesToDocument;
 	}
 	
 	public function setPageRange(Range $range, Document &$document) : void {
-		$this->setPageRangeToDocumentService->execute($range, $document);
+		$this->setPageRangeToDocument->execute($range, $document);
 	}
 
 	public function applyWatermarksToDocument(Document &$document): void {
-		$this->applyWatermarkToDocumentService->execute($document);
+		$this->applyWatermarkToDocument->execute($document);
 	}
 	
 	public function saveDocument(Document $document) : void {
-		$this->saveChangesToDocumentService->execute($document);
+		$this->saveChangesToDocument->execute($document);
 	}
 }
 ?>

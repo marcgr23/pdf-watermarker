@@ -1,11 +1,11 @@
 <?php
 
-include_once( dirname(__FILE__) . '/CoordinatesCalculatorService.php');
+include_once( dirname(__FILE__) . '/CoordinatesCalculator.php');
 include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
 include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../../Domain/PdfAddWatermarkServiceInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/PdfAddWatermarkInterface.php');
 
-class PdfAddWatermarkService implements AddWatermarkServiceInterface {
+class PdfAddWatermark implements AddWatermarkInterface {
 	
 	private const WATERMARK_RESOLUTION = -96;
 	private CoordinatesCalculatorInterface $coordinatesService;

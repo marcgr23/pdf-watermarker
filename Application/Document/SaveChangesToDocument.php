@@ -1,16 +1,16 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../../Domain/Document.php');
-include_once( dirname(__FILE__) . '/../../../Domain/SaveDocumentInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/../../Domain/Document/SaveDocumentInterface.php');
 
-class SaveChangesToDocumentService {
-    private SaveDocumentInterface $saveDocumentService;
+class SaveChangesToDocument {
+    private SaveDocumentInterface $saveDocument;
 
-    public function __construct(SaveDocumentInterface $saveDocumentService) {
-        $this->saveDocumentService = $saveDocumentService;
+    public function __construct(SaveDocumentInterface $saveDocument) {
+        $this->saveDocument = $saveDocument;
     }
 
     public function execute(Document $document) : void {
-        $this->saveDocumentService->execute($document);
+        $this->saveDocument->execute($document);
     }
 }
