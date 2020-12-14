@@ -1,9 +1,8 @@
 <?php
 
-include_once( dirname(__FILE__) . '/CoordinatesCalculator.php');
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
-include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../../Domain/PdfAddWatermarkInterface.php');
+include_once( dirname(__FILE__) . '/../../Coordinates/CoordinatesCalculator.php');
+include_once( dirname(__FILE__) . '/../../../Domain/ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/../../../Domain/ObjectModel/Document/Watermark.php');
 
 class PdfAddWatermark implements AddWatermarkInterface {
 	

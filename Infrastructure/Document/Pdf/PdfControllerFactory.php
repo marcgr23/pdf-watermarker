@@ -4,6 +4,11 @@ include_once( dirname(__FILE__) . '/../../DocumentController.php' );
 include_once( dirname(__FILE__) . '/../../../Application/Document/ApplyWatermarkToDocument.php' );
 include_once( dirname(__FILE__) . '/../../../Application/Document/SaveChangesToDocument.php' );
 include_once( dirname(__FILE__) . '/../../../Application/Document/SetPageRangeToDocument.php' );
+include_once( dirname(__FILE__) . '/../../../Infrastructure/Document/Pdf/PdfAddWatermark.php' );
+include_once( dirname(__FILE__) . '/../../../Infrastructure/Document/Pdf/PdfAddWatermarkInvisible.php' );
+include_once( dirname(__FILE__) . '/GetTotalPagesFromPdf.php' );
+include_once( dirname(__FILE__) . '/ImportPageToPdf.php' );
+include_once( dirname(__FILE__) . '/SavePdfDocument.php' );
 
 
 class PdfControllerFactory implements DocumentControllerFactoryInterface {

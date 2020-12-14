@@ -1,5 +1,7 @@
 <?php
 
+include_once( dirname(__FILE__) . '/../ObjectModel/Document/DocumentPage.php');
+
 class SetRangeToDocumentPages {
 
     private GetTotalPagesFromDocumentInterface $getTotalPagesFromDocument;
@@ -11,7 +13,7 @@ class SetRangeToDocumentPages {
     public function execute(Range $range, Document &$document) : void {
         $totalPages = $this->getTotalPagesFromDocument->execute($document);
     
-        $end = $range->getRangeEnd() !== null ? $range->getRangeEnd() : $totalPages;
+        $end = $range->getRangeEnd() !== 0 ? $range->getRangeEnd() : $totalPages;
     
         for ($ctr = 1; $ctr <= $totalPages; $ctr++ ) {
             $isWithinRange = $ctr >= $range->getRangeStart() && $ctr <= $end;

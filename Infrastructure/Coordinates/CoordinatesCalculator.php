@@ -1,9 +1,9 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates.php');
-include_once( dirname(__FILE__) . '/../../Domain/Watermark.php');
-include_once( dirname(__FILE__) . '/../../Domain/Document.php');
-include_once( dirname(__FILE__) . '/../../Domain/CoordinatesCalculatorInterface.php');
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates/Coordinates.php');
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Watermark.php');
+include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/../../Domain/Coordinates/CoordinatesCalculatorInterface.php');
 
 class CoordinatesCalculator implements CoordinatesCalculatorInterface {
 	private const WIDTH_COLUMN_NAME   = 'width';
