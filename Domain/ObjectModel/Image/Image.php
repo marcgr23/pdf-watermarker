@@ -21,8 +21,8 @@ class Image {
 
     function __construct(string $filePath) {
 		$this->initializeExtension($filePath);
-		$imagePrepare = $this->setImagePreparer($filePath);
-		$this->filePath = $this->doPrepare($imagePrepare);
+		$imagePreparer = $this->setImagePreparer($filePath);
+		$this->filePath = $this->doPrepare($imagePreparer);
 		$this->setImageSize($this->filePath);
 	}
 

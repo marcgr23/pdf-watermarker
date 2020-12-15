@@ -41,63 +41,63 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
   }
 
   
-  // public function testDefaultOptions() {
-  //   $this->watermarker->applyWatermarksToDocument($this->document);
-  //   $this->watermarker->saveDocument($this->document);
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . "output-default-position.pdf") === filesize($this->output) );
-  // }
+  public function testDefaultOptions() {
+    $this->watermarker->applyWatermarksToDocument($this->document);
+    $this->watermarker->saveDocument($this->document);
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . "output-default-position.pdf") === filesize($this->output) );
+  }
 
-  // public function testDefaultOptionsWithJPG() {
-  //   $watermark_jpg = new Watermark( $this->_assets_directory . 'star.jpg');
-  //   $watermarker_jpg = $this->factory->create($this->_assets_directory . 'test.pdf', $this->output, $watermark_jpg);
+  public function testDefaultOptionsWithJPG() {
+    $watermark_jpg = new Watermark( $this->_assets_directory . 'star.jpg');
+    $watermarker_jpg = $this->factory->create($this->_assets_directory . 'test.pdf', $this->output, $watermark_jpg);
   
-  //   $watermarker_jpg->setPageRange(new Range(), $this->document);
-  //   $watermarker_jpg->applyWatermarksToDocument($this->document);
-  //   $watermarker_jpg->saveDocument($this->document);
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-from-jpg.pdf') === filesize($this->output) );
-  // }
+    $watermarker_jpg->setPageRange(new Range(), $this->document);
+    $watermarker_jpg->applyWatermarksToDocument($this->document);
+    $watermarker_jpg->saveDocument($this->document);
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-from-jpg.pdf') === filesize($this->output) );
+  }
 
-  // public function testTopRightPosition() {
-  //   $this->watermark->setPosition('topright');
-  //   $this->watermarker->applyWatermarksToDocument($this->document); 
-  //   $this->watermarker->saveDocument($this->document);
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-topright-position.pdf') === filesize($this->output) );
-  // }
+  public function testTopRightPosition() {
+    $this->watermark->setPosition('topright');
+    $this->watermarker->applyWatermarksToDocument($this->document); 
+    $this->watermarker->saveDocument($this->document);
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-topright-position.pdf') === filesize($this->output) );
+  }
 
-  // public function testTopLeftPosition() {
-  //   $this->watermark->setPosition('topleft');
-  //   $this->watermarker->applyWatermarksToDocument($this->document); 
-  //   $this->watermarker->saveDocument($this->document); 
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-topleft-position.pdf') === filesize($this->output) );
-  // }
+  public function testTopLeftPosition() {
+    $this->watermark->setPosition('topleft');
+    $this->watermarker->applyWatermarksToDocument($this->document); 
+    $this->watermarker->saveDocument($this->document); 
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-topleft-position.pdf') === filesize($this->output) );
+  }
 
-  // public function testBottomRightPosition() {
-  //   $this->watermark->setPosition('bottomright');
-  //   $this->watermarker->applyWatermarksToDocument($this->document); 
-  //   $this->watermarker->saveDocument($this->document); 
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-bottomright-position.pdf') === filesize($this->output) );
-  // }
+  public function testBottomRightPosition() {
+    $this->watermark->setPosition('bottomright');
+    $this->watermarker->applyWatermarksToDocument($this->document); 
+    $this->watermarker->saveDocument($this->document); 
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-bottomright-position.pdf') === filesize($this->output) );
+  }
 
-  // public function testBottomLeftPosition() {
-  //   $this->watermark->setPosition('bottomleft');
-  //   $this->watermarker->applyWatermarksToDocument($this->document); 
-  //   $this->watermarker->saveDocument($this->document); 
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-bottomleft-position.pdf') === filesize($this->output) );
-  // }
+  public function testBottomLeftPosition() {
+    $this->watermark->setPosition('bottomleft');
+    $this->watermarker->applyWatermarksToDocument($this->document); 
+    $this->watermarker->saveDocument($this->document); 
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-bottomleft-position.pdf') === filesize($this->output) );
+  }
 
-  // public function testAsBackground() {
-  //   $this->watermark->setAsBackground();
-  //   $this->watermarker->applyWatermarksToDocument($this->document); 
-  //   $this->watermarker->saveDocument($this->document); 
-  //   $this->assertTrue( file_exists($this->output) === true );
-  //   $this->assertTrue( filesize( $this->_assets_directory . 'output-as-background.pdf') === filesize($this->output) );
-  // }
+  public function testAsBackground() {
+    $this->watermark->setAsBackground();
+    $this->watermarker->applyWatermarksToDocument($this->document); 
+    $this->watermarker->saveDocument($this->document); 
+    $this->assertTrue( file_exists($this->output) === true );
+    $this->assertTrue( filesize( $this->_assets_directory . 'output-as-background.pdf') === filesize($this->output) );
+  }
 	
 	public function testSpecificPages() {
 		$this->watermarker_multiple->setPageRange(new Range (3,5), $this->document_multiple);
