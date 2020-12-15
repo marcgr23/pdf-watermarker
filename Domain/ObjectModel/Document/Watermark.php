@@ -16,10 +16,6 @@ class Watermark {
 		$this->position = self::DEFAULT_POSITION;
 		$this->asBackground = false;
 	}
-	
-	private function prepareImage() : string {
-		return $this->imagePrepare->doPrepare();
-	}
 
 	public function getHeight() : float {
 		return $this->image->getCalculatedHeight();

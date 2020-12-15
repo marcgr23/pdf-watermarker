@@ -10,6 +10,8 @@ class Image {
 	const IMAGE_HEIGHT = 1;
 	const JPG = 'jpg';
 	const PNG = 'png';
+	const DPI = 96;
+	const INCHES = 25.4;
 	const EXTENSION_ARRAY_NAME = 'extension';
     
 	private string $filePath;
@@ -19,7 +21,7 @@ class Image {
 
     function __construct(string $filePath) {
 		$this->initializeExtension($filePath);
-		$imagePrepare = $this->setImagePrepare();
+		$imagePrepare = $this->setImagePreparer($filePath);
 		$this->filePath = $this->doPrepare($imagePrepare);
 		$this->setImageSize($this->filePath);
 	}
@@ -48,16 +50,15 @@ class Image {
 	}
 
 	public function doPrepare(ImagePrepareInterface $genericPreparer) : string {
-		$genericPreparer->doPrepare();
+		return $genericPreparer->doPrepare();
 	}
 
-	private function setImagePreparer () : ImagePrepareInterface{
-		switch($this->extension):
+	private function setImagePreparer (string $filePath) : ImagePrepareInterface {
+		switch($this->extension) {
 			case self::JPG:
-				return new SetupJpgImage($this->filePath);
+				return new SetupJpgImage($filePath);
 			case self::PNG:
-				return new SetupPngImage($this->filePath);
-			
-		// return $genericPreparer;
+				return new SetupPngImage($filePath);
+		}	
 	}
 }
