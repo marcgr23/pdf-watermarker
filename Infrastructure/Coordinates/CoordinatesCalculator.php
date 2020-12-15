@@ -11,8 +11,8 @@ class CoordinatesCalculator implements CoordinatesCalculatorInterface {
 
     public function execute(Watermark $watermark, string $templateId, Document $document) : Coordinates {
 		$templateDimension = $document->pdfInstance->getTemplateSize($templateId);
-		$wWidth = $watermark->getCalculatedWidth();
-		$wHeight = $watermark->getCalculatedHeight();
+		$wWidth = $watermark->getWidth();
+		$wHeight = $watermark->getHeight();
 
 		switch( $watermark->getPosition() ) {
 			case 'topleft': 

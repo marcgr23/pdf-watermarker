@@ -28,8 +28,7 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
     $this->factory = new PdfControllerFactory();
     
     $this->documentFactory = new PdfDocumentFactory();
-    $this->watermark = new Watermark( $this->_assets_directory . "star.png",
-                                      new SetupPngImage($this->_assets_directory . "star.png"));
+    $this->watermark = new Watermark( $this->_assets_directory . "star.png");
     $this->output =  $this->_assets_directory . "test-output.pdf";
     $this->output_multiple =  $this->_assets_directory . "test-output-multiple.pdf";
     $input = $this->_assets_directory . "test.pdf";
@@ -50,7 +49,7 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
   }
 
   public function testDefaultOptionsWithJPG() {
-    $watermark_jpg = new Watermark( $this->_assets_directory . 'star.jpg', new SetupJpgImage($this->_assets_directory . "star.jpg"));
+    $watermark_jpg = new Watermark( $this->_assets_directory . 'star.jpg');
     $watermarker_jpg = $this->factory->create($this->_assets_directory . 'test.pdf', $this->output, $watermark_jpg);
   
     $watermarker_jpg->setPageRange(new Range(), $this->document);
