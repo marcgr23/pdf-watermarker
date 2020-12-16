@@ -2,6 +2,8 @@
 
 include_once( dirname(__FILE__) . '/../../../Domain/ObjectModel/Document/DocumentPathHandler.php');
 include_once( dirname(__FILE__) . '/../../../Domain/ObjectModel/Document/Range.php');
+
+require_once('vendor/autoload.php');
 use \setasign\Fpdi\Fpdi;
 
 class PdfDocument extends Document {
