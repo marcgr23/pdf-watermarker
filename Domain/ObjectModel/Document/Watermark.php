@@ -17,11 +17,19 @@ class Watermark {
 		$this->asBackground = false;
 	}
 
-	public function getHeight() : float {
+	public function getImageHeight() : int {
+		return $this->image->getHeight();
+	}
+
+	public function getImageWidth(): int {
+		return $this->image->getWidth();
+	}
+
+	public function getCalculatedHeight() : float {
 		return $this->image->getCalculatedHeight();
 	}
 	
-	public function getWidth() : float {
+	public function getCalculatedWidth() : float {
 		return $this->image->getCalculatedWidth();
 	}
 

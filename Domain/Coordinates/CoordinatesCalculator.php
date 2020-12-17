@@ -1,9 +1,9 @@
 <?php
 
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Coordinates/Coordinates.php');
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Watermark.php');
-include_once( dirname(__FILE__) . '/../../Domain/ObjectModel/Document/Document.php');
-include_once( dirname(__FILE__) . '/../../Domain/Coordinates/CoordinatesCalculatorInterface.php');
+include_once( dirname(__FILE__) . '/../ObjectModel/Coordinates/Coordinates.php');
+include_once( dirname(__FILE__) . '/../ObjectModel/Document/Watermark.php');
+include_once( dirname(__FILE__) . '/../ObjectModel/Document/Document.php');
+include_once( dirname(__FILE__) . '/CoordinatesCalculatorInterface.php');
 
 class CoordinatesCalculator implements CoordinatesCalculatorInterface {
 	private const WIDTH_COLUMN_NAME   = 'width';
@@ -11,8 +11,8 @@ class CoordinatesCalculator implements CoordinatesCalculatorInterface {
 
     public function execute(Watermark $watermark, string $templateId, Document $document) : Coordinates {
 		$templateDimension = $document->pdfInstance->getTemplateSize($templateId);
-		$wWidth = $watermark->getWidth();
-		$wHeight = $watermark->getHeight();
+		$wWidth = $watermark->getCalculatedWidth();
+		$wHeight = $watermark->getCalculatedHeight();
 
 		switch( $watermark->getPosition() ) {
 			case 'topleft': 

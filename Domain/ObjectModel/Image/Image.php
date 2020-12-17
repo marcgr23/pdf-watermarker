@@ -38,10 +38,22 @@ class Image {
 	
 	public function getCalculatedWidth() : float {
 		return ($this->width/self::DPI)*self::INCHES;
-    }
+	}
+	
+	public function getHeight() : int {
+		return $this->height;
+	}
+
+	public function getWidth() : int {
+		return $this->width;
+	}
     
     public function getFilePath() : string {
 		return $this->filePath;
+	}
+
+	public function getExtension() : string {
+		return $this->extension;
 	}
 
 	private function initializeExtension(string $path) : void {
@@ -59,6 +71,8 @@ class Image {
 				return new SetupJpgImage($filePath);
 			case self::PNG:
 				return new SetupPngImage($filePath);
+			default:
+				throw new Exception('UnknownImageFormat');
 		}	
 	}
 }

@@ -49,39 +49,28 @@ class PDFWatermark_test extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testGetHeight() {
-		$this->assertTrue( $this->watermark->getHeight() == 200 );
+		$this->assertTrue( $this->watermark->getImageHeight() == 200 );
 	}
 	
 	public function testGetWidth() {
-		$this->assertTrue( $this->watermark->getWidth()== 200 );
+		$this->assertTrue( $this->watermark->getImageWidth()== 200 );
 	}
 
 	public function testPrepareImagePng() {
-		$class = new ReflectionClass('Watermark');
-		$method = $class->getMethod('prepareImage');
-		$method->setAccessible(true);
+		$image = new Image($this->_assets_directory . 'star.png');
 
-  		$fileExtension = substr($method->invokeArgs($this->watermark, [ $this->_assets_directory . 'star.png']), -4);
-
-  		$this->assertSame('.png', $fileExtension);
+  		$this->assertSame('png', $image->getExtension());
 	}
 
 	public function testPrepareImageJpg() {
-		$class = new ReflectionClass('Watermark');
-		$method = $class->getMethod('prepareImage');
-		$method->setAccessible(true);
+		$image = new Image($this->_assets_directory . 'star.jpg');
 
-  		$fileExtension = substr($method->invokeArgs($this->watermarkJpg, [ $this->_assets_directory . 'star.jpg']), -4);
-
-  		$this->assertSame('.jpg', $fileExtension);
+  		$this->assertSame('jpg', $image->getExtension());
 	}
 
 	public function testPrepareImageInvalidImage() {
-		$class = new ReflectionClass('Watermark');
-		$method = $class->getMethod('prepareImage');
-		$method->setAccessible(true);
-
-  		$fileExtension = $method->invokeArgs($this->watermark, [ $this->_assets_directory . 'star.tif']);
+		$this->setExpectedException("Exception", "UnknownImageFormat");
+		$image = new Image($this->_assets_directory . 'star.tif');
 	}
 	
 }
