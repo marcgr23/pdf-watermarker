@@ -18,8 +18,12 @@ Using it, you can:
 
 ``` php
 <?php
-require_once('pdfwatermarker/pdfwatermarker.php');
-require_once('pdfwatermarker/pdfwatermark.php');
+//These paths may vary depending on the location of the library in your project
+include_once( dirname(__FILE__) . '/Domain/Document/DocumentFactoryInterface.php');
+include_once( dirname(__FILE__) . '/Domain/Document/DocumentControllerFactoryInterface.php');
+include_once( dirname(__FILE__) . '/Infrastructure/Document/Pdf/PdfControllerFactory.php');
+include_once( dirname(__FILE__) . '/Infrastructure/Document/Pdf/PdfDocumentFactory.php');
+include_once( dirname(__FILE__) . '/Domain/ObjectModel/Document/Watermark.php');
 ```
 
 ## Usage
@@ -27,44 +31,25 @@ require_once('pdfwatermarker/pdfwatermark.php');
 ``` php
 <?php
 
-//Specify path to image. The image must have a 96 DPI resolution.
-$watermark = new PDFWatermark('C:\myimage.png'); 
+//This block builds the watermark
+$watermark = new Watermark('/home/myimage.png');
+$watermark->setPosition('topright');
 
-//Set the position
-$watermark->setPosition('bottomleft');
+//This block builds the controller factory and the document factory
+$controllerFactory = new PdfControllerFactory();
+$documentFactory = new PdfDocumentFactory();
 
-//Place watermark behind original PDF content. Default behavior places it over the content.
-$watermark->setAsBackground();
+//This creates a new document using the input path and the output path
+$document = $documentFactory->create('/home/input.pdf', '/home/output.pdf');
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// enum FactoryEnum {
-//     PDF,
-//     WORD,
-// }
+//This creates a watermarker (controller) 
+$watermarker = $controllerFactory->create($'/home/input.pdf', $'/home/output.pdf', $watermark);
 
+//This block applies the watermark to the selected PDF
+$watermarker->setPageRange(new Range(3,6), $document);
+$watermarker->applyWatermarksToDocument($document);
+$watermarker->saveDocument($document);
 
-$factory = new DocumentFactoryPdf();
-$document = $factory->createDocument("origin", "destiny", $watermark);
-
-$documentController = new DocumentController($document);
-
-$documentController->setPageRange(1,5);
-
-$documentController->applyWatermarksToDocument();
-
-$documentController->saveDocument();
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Specify the path to the existing pdf, the path to the new pdf file, and the watermark object
-//$watermarker = new PDFWatermarker('C:\test.pdf','C:\output.pdf',$watermark); 
-
-//Set page range. Use 1-based index.
-$watermarker->setPageRange(1,5);
- 
-//$watermarker->logicaDeAñadirMarcasDeAgua();
-
-//Save the new PDF to its specified location
-$watermarker->savePdf(); 
 ?>
 ```
 
