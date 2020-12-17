@@ -12,11 +12,11 @@ class SetRangeToDocumentPages {
 
     public function execute(Range $range, Document &$document) : void {
         $totalPages = $this->getTotalPagesFromDocument->execute($document);
-    
-        $end = $range->getRangeEnd() !== 0 ? $range->getRangeEnd() : $totalPages;
+        $end = ($range->getRangeEnd() !== 0 && $range->getRangeEnd() <= $totalPages) ? $range->getRangeEnd() : $totalPages;
+        $start = ($range->getRangeStart() > 0 && $range->getRangeStart() <= $end) ? $range->getRangeStart() : 1;
     
         for ($ctr = 1; $ctr <= $totalPages; $ctr++ ) {
-            $isWithinRange = $ctr >= $range->getRangeStart() && $ctr <= $end;
+            $isWithinRange = $ctr >= $start && $ctr <= $end;
             $document->pages[] = new DocumentPage($isWithinRange, $ctr);
         }
     }
